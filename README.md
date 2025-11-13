@@ -1,0 +1,98 @@
+# @zzcpt/zztool js 工具库
+
+`@zzcpt/zztool` 是一个轻量级，使用ECMAScript 2015，高性能的前端工具库，支持 Tree Shaking，旨在简化日常开发中的常见操作，提高开发效率。它提供了多种实用的工具函数，包括数据处理、数据校验、格式转换等。
+
+[![npm version](https://img.shields.io/npm/v/@zzcpt/zztool?label=version)](https://www.npmjs.com/package/@zzcpt/zztool)
+[![npm downloads](https://img.shields.io/npm/dm/@zzcpt/zztool?label=downloads)](https://www.npmjs.com/package/@zzcpt/zztool)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/@zzcpt/zztool/badge)](https://www.jsdelivr.com/package/npm/@zzcpt/zztool)
+[![License](https://img.shields.io/github/license/YOuRHhH/zztool)](./LICENSE)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/@zzcpt/zztool?label=size)](https://bundlephobia.com/package/@zzcpt/zztool)
+
+[中文](https://github.com/YOuRHhH/zztool/blob/main/README.md) | [English](https://github.com/YOuRHhH/zztool/blob/main/READMEEN.md)
+
+## ✨ 特征
+
+* 🚀 ​**轻量且可摇树**​：零依赖，支持按需引入，体积小巧
+* 🔧 ​**常用工具函数**​：数组、字符串、日期、对象、函数控制、存储等全覆盖
+* 💡 ​**TypeScript 编写**​：完整类型提示，参数校验与错误提示更安全
+* 🌐 ​**多环境支持**​：兼容 Node.js、浏览器，支持通过 **CDN / NPM** 引入
+* 🧩 ​**高内聚低耦合**​：函数职责单一，组合灵活，便于扩展
+* ⚡ ​**高性能实现**​：避免冗余逻辑，递归/循环清晰，运行高效
+
+## 📦 安装
+
+```bash
+# via npm
+npm install @zzcpt/zztool
+
+# or via yarn
+yarn add @zzcpt/zztool
+
+# or via CDN
+<script src="https://cdn.jsdelivr.net/npm/@zzcpt/zztool"></script>
+```
+
+## 🚀 使用
+
+```ts
+import { isEmpty, getDate} from '@zzcpt/zztool';
+
+console.log(isEmpty([])); // false
+console.log(getDate('Y-M-D')) // xxxx-xx-xx
+console.log(getDate(new Date(), 'Y-M-D')); // xxxx-xx-xx
+```
+
+## 🌍 CDN
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@zzcpt/zztool"></script>
+<script>
+  console.log(zztool.isEmpty([])); // false
+</script>
+```
+
+## 🔔提醒
+
+本库不支持IE，如果需要支持IE请在自己项目中使用 `Babel 转译`或 `Polyfill `或其他的工具
+
+
+`@zzcpt/node`
+
+* 因为`nodejs`很多`api`只支持`CJS mode`不支持`ESM mode`，所以不在此库开发有关`nodejs`的工具函数
+  * 如`文件读取`、`写入文件`等等
+  * 解决方案开发`nodejs`库，命名为`@zzcpt/node`
+  * `@zzcpt/zztool`和`@zzcpt/node`一起开发维护
+  * `@zzcpt/zztool`
+    * ESM 模式
+    * 纯粹工具函数（跨平台，浏览器 + Node 都可用）
+    * 不涉及 Node-only API（如 `fs`、`path`、`module`、`process`）
+  * `@zzcpt/node`
+    * Node-only 功能库
+    * **CJS/ESM** 模式
+    * 仅在 Node.js 上运行
+    * 提供 Node 专用工具函数
+
+## 📚文档
+
+[文档地址](https://yourhhh.github.io/zztoolDocument/)
+
+## 🏆贡献
+
+欢迎贡献代码或提交 Issue！
+
+GitHub 仓库地址：[https://github.com/YOuRHhH/zztool](https://github.com/YOuRHhH/zztool)
+
+## 📕许可证
+
+`@zzcpt/zztool` 遵循 MIT 许可证。
+[MIT](https://github.com/YOuRHhH/zztool/blob/main/LICENSE)
+
+## 更新日志
+
+请看 [CHANGELOG.md](https://github.com/YOuRHhH/zztool/blob/main/CHANGELOG.md) 文件
+
+## 更新
+
+更新版本遵循`语义化版本(SemVer)`从2.4.0开始
+`3.0.0`及以上版本支持DOM操作
+

@@ -1,0 +1,11 @@
+ssh:
+8.149.135.126
+端口:22
+root:*h.)&*^%kj0*$@lmk*LP%@!
+
+rds
+内网地址：rm-bp172mt1bs76k1q0w.mysql.rds.aliyuncs.com
+外网地址：rm-bp172mt1bs76k1q0wdo.mysql.rds.aliyuncs.com
+
+账号: root
+密码：)(*JKN!JK-Lf)^$#as709^&M%%LK
