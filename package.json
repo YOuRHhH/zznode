@@ -1,7 +1,10 @@
 {
   "name": "@zzcpt/node",
   "private": false,
-  "version": "2.6.3",
+  "version": "0.0.2",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./dist/zznode.umd.cjs",
   "module": "./dist/zznode.es.js",

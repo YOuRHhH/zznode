@@ -1,116 +1,116 @@
-# # 运行这个需要更改整个框架 不能使用vite
-# name: Publish to npm
+# 运行这个需要更改整个框架 不能使用vite
+name: Publish to npm
 
-# on:
-#   push:
-#     branches:
-#       - main # 只在 main 分支推送时触发
-#   workflow_dispatch: # 允许手动触发
+on:
+  push:
+    branches:
+      - main # 只在 main 分支推送时触发
+  workflow_dispatch: # 允许手动触发
 
-# jobs:
-#   publish:
-#     runs-on: ubuntu-latest
-#     permissions:
-#       contents: write
-#       id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
       
-#     steps:
-#       - uses: actions/checkout@v4
-#         with:
-#           token: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-#       - name: Checkout repository
-#         uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-#       - name: npm ci
-#         run: |
-#           npm ci
-#           npm install
-#           npm run build
+      - name: npm ci
+        run: |
+          npm ci
+          npm install
+          npm run build
           
-#       - name: Setup Node.js with npm auth
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: 18
-#           registry-url: 'https://registry.npmjs.org/'
+      - name: Setup Node.js with npm auth
+        uses: actions/setup-node@v4
+        with:
+          node-version: 14
+          registry-url: 'https://registry.npmjs.org/'
 
-#       - name: Get version info
-#         id: version
-#         run: |
-#           # 获取当前版本和提交信息
-#           PACKAGE_VERSION=$(node -p "require('./package.json').version")
-#           COMMIT_HASH=$(git rev-parse --short HEAD)
-#           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-#           BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+      - name: Get version info
+        id: version
+        run: |
+          # 获取当前版本和提交信息
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           
-#           echo "version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
-#           echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
-#           echo "build_date=$BUILD_DATE" >> $GITHUB_OUTPUT
+          echo "version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+          echo "build_date=$BUILD_DATE" >> $GITHUB_OUTPUT
           
-#           echo "🏷️ Version: $PACKAGE_VERSION"
-#           echo "🔗 Commit: $COMMIT_HASH"
-#           echo "📅 Build Date: $BUILD_DATE"
-#           echo "📝 Last Commit: $COMMIT_MESSAGE"
+          echo "🏷️ Version: $PACKAGE_VERSION"
+          echo "🔗 Commit: $COMMIT_HASH"
+          echo "📅 Build Date: $BUILD_DATE"
+          echo "📝 Last Commit: $COMMIT_MESSAGE"
 
 
 
-#       - name: Create build info file
-#         run: |
-#           cat > dist/BUILD_INFO.md << EOF
-#           # Build Information
+      - name: Create build info file
+        run: |
+          cat > dist/BUILD_INFO.md << EOF
+          # Build Information
 
-#           **Version**: ${{ steps.version.outputs.version }}
+          **Version**: ${{ steps.version.outputs.version }}
 
-#           **Built and signed on**: GitHub Actions
+          **Built and signed on**: GitHub Actions
 
-#           **Build Date**: ${{ steps.version.outputs.build_date }}
+          **Build Date**: ${{ steps.version.outputs.build_date }}
 
-#           **Commit Hash**: ${{ steps.version.outputs.commit_hash }}
+          **Commit Hash**: ${{ steps.version.outputs.commit_hash }}
 
-#           **View more details**: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          **View more details**: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-#           EOF
+          EOF
 
-#       - name: Remove all dependencies for publish
-#         run: |
-#           # 创建零依赖的 package.json
-#           node -e "
-#           const pkg = require('./package.json');
+      - name: Remove all dependencies for publish
+        run: |
+          # 创建零依赖的 package.json
+          node -e "
+          const pkg = require('./package.json');
           
-#           // 删除所有依赖字段
-#           delete pkg.dependencies;
-#           delete pkg.devDependencies;
-#           delete pkg.peerDependencies;
-#           delete pkg.peerDependenciesMeta;
+          // 删除所有依赖字段
+          delete pkg.dependencies;
+          delete pkg.devDependencies;
+          delete pkg.peerDependencies;
+          delete pkg.peerDependenciesMeta;
           
-#           // 简化 scripts，只保留必要的
-#           pkg.scripts = {};
+          // 简化 scripts，只保留必要的
+          pkg.scripts = {};
           
-#           console.log('Removed all dependencies for publishing');
-#           require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
-#           "
-#       - name: Verify package content
-#         run: |
-#           echo "📦 Package.json content:"
-#           cat package.json
-#           echo ""
-#           echo "📁 Files to be published:"
-#           ls -la dist/ lib/
+          console.log('Removed all dependencies for publishing');
+          require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));
+          "
+      - name: Verify package content
+        run: |
+          echo "📦 Package.json content:"
+          cat package.json
+          echo ""
+          echo "📁 Files to be published:"
+          ls -la dist/ lib/
 
-#       - name: Clean dependencies before publish\
-#         run: npm prune --production
+      - name: Clean dependencies before publish\
+        run: npm prune --production
         
 
-#       - name: Publish with provenance
-#         run: npm publish --provenance --access public
-#         env:
-#           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish with provenance
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-#       - name: Create GitHub Release
-#         uses: softprops/action-gh-release@v1
-#         with:
-#           tag_name: v${{ steps.version.outputs.version }}
-#           name: Release v${{ steps.version.outputs.version }}
-#           generate_release_notes: true
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release v${{ steps.version.outputs.version }}
+          generate_release_notes: true
